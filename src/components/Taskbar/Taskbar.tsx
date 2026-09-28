@@ -37,7 +37,9 @@ export default function Taskbar({
   const taskbarRef = useRef<HTMLDivElement>(null);
   const popupRef = useRef<HTMLDivElement>(null);
   const [time, setTime] = useState(new Date());
-  const [trayOpen, setTrayOpen] = useState<"volume" | "network" | "power" | null>(null);
+  const [trayOpen, setTrayOpen] = useState<
+    "volume" | "network" | "power" | null
+  >(null);
   const [volume, setVolume] = useState(75);
   const [muted, setMuted] = useState(false);
   const [network, setNetwork] = useState<NetworkState>({
@@ -117,7 +119,9 @@ export default function Taskbar({
     openOrFocus(app, title);
   };
 
-  const handlePowerAction = (action: "lock" | "sleep" | "restart" | "shutdown") => {
+  const handlePowerAction = (
+    action: "lock" | "sleep" | "restart" | "shutdown",
+  ) => {
     setTrayOpen(null);
 
     if (action === "lock") {
@@ -177,18 +181,22 @@ export default function Taskbar({
             <strong>Network</strong>
           </div>
           <div className="network-status">
-            <Wifi size={16} /> {network.error ? "Unable to detect" : network.connected ? network.name : "Not connected"}
+            <Wifi size={16} />{" "}
+            {network.error
+              ? "Unable to detect"
+              : network.connected
+                ? network.name
+                : "Not connected"}
           </div>
           <div className="network-status">
-            Status: {
-              network.error
-                ? "Unknown"
-                : !network.connected
-                  ? "Disconnected"
-                  : network.internet
-                    ? "Connected"
-                    : "No Internet"
-            }
+            Status:{" "}
+            {network.error
+              ? "Unknown"
+              : !network.connected
+                ? "Disconnected"
+                : network.internet
+                  ? "Connected"
+                  : "No Internet"}
           </div>
         </div>
       );
@@ -263,7 +271,9 @@ export default function Taskbar({
             type="button"
             className="tray-btn"
             aria-label="Volume"
-            onClick={() => setTrayOpen((v) => (v === "volume" ? null : "volume"))}
+            onClick={() =>
+              setTrayOpen((v) => (v === "volume" ? null : "volume"))
+            }
           >
             {muted || volume === 0 ? (
               <VolumeX className="taskbar-system-icon volume-icon" size={16} />
@@ -275,7 +285,9 @@ export default function Taskbar({
             type="button"
             className="tray-btn"
             aria-label="Network"
-            onClick={() => setTrayOpen((v) => (v === "network" ? null : "network"))}
+            onClick={() =>
+              setTrayOpen((v) => (v === "network" ? null : "network"))
+            }
           >
             {network.connected ? (
               <Wifi className="taskbar-system-icon network-icon" size={16} />
@@ -292,7 +304,10 @@ export default function Taskbar({
             <Power className="taskbar-system-icon power-icon" size={16} />
           </button>
           <span>
-            {time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+            {time.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
           </span>
         </div>
       </div>

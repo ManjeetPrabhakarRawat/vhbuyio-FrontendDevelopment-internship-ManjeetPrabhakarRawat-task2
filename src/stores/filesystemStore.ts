@@ -1,6 +1,12 @@
 import { create } from "zustand";
 import type { FileNode } from "../types";
-import { defaults, DESKTOP, ROOT, descendants, isValidName } from "../utils/filesystem";
+import {
+  defaults,
+  DESKTOP,
+  ROOT,
+  descendants,
+  isValidName,
+} from "../utils/filesystem";
 import { loadFiles, saveFiles, clearFiles } from "../utils/idb";
 const uid = () => crypto.randomUUID();
 const normalizeName = (name: string) => name.trim();
@@ -17,7 +23,10 @@ const hasNameConflict = (
       f.deletedAt === undefined &&
       f.name.toLowerCase() === name.toLowerCase(),
   );
-const descendantsIncludingDeleted = (files: FileNode[], id: string): FileNode[] => {
+const descendantsIncludingDeleted = (
+  files: FileNode[],
+  id: string,
+): FileNode[] => {
   const node = files.find((file) => file.id === id);
   if (!node) return [];
   return [
@@ -71,7 +80,10 @@ export const useFS = create<FS>((set, get) => ({
   },
   addFolder: (name, parentId) => {
     const normalized = normalizeName(name);
-    if (!isValidName(normalized) || hasNameConflict(get().files, parentId, normalized))
+    if (
+      !isValidName(normalized) ||
+      hasNameConflict(get().files, parentId, normalized)
+    )
       return null;
     const f = {
       id: uid(),
@@ -88,7 +100,10 @@ export const useFS = create<FS>((set, get) => ({
   },
   addFile: (name, parentId, content = "") => {
     const normalized = normalizeName(name);
-    if (!isValidName(normalized) || hasNameConflict(get().files, parentId, normalized))
+    if (
+      !isValidName(normalized) ||
+      hasNameConflict(get().files, parentId, normalized)
+    )
       return null;
     const f = {
       id: uid(),
@@ -129,9 +144,14 @@ export const useFS = create<FS>((set, get) => ({
   },
   restore: (id) => {
     const files = get().files;
-    const ids = new Set(descendantsIncludingDeleted(files, id).map((f) => f.id));
+    const ids = new Set(
+      descendantsIncludingDeleted(files, id).map((f) => f.id),
+    );
     const restoring = files.filter((file) => ids.has(file.id));
-    if (!restoring.length || restoring.some((file) => file.deletedAt === undefined))
+    if (
+      !restoring.length ||
+      restoring.some((file) => file.deletedAt === undefined)
+    )
       return false;
     const conflict = restoring.some((file) =>
       files.some(
@@ -153,7 +173,9 @@ export const useFS = create<FS>((set, get) => ({
     return true;
   },
   deletePermanently: (id) => {
-    const ids = new Set(descendantsIncludingDeleted(get().files, id).map((f) => f.id));
+    const ids = new Set(
+      descendantsIncludingDeleted(get().files, id).map((f) => f.id),
+    );
     const files = get().files.filter((f) => !ids.has(f.id));
     set({ files });
     void saveFiles(files);

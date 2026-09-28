@@ -92,7 +92,10 @@ export default function TextEditor({ windowId }: { windowId?: string }) {
         setSaved(true);
         notify("New file created", n);
       } else {
-        notify("Unable to create file", "A file with that name already exists.");
+        notify(
+          "Unable to create file",
+          "A file with that name already exists.",
+        );
       }
     }
   };

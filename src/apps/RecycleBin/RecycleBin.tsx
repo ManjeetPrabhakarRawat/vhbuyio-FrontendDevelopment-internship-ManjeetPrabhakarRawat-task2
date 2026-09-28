@@ -23,14 +23,19 @@ export default function RecycleBin() {
       <header className="recycle-bin-header">
         <div>
           <h2>Recycle Bin</h2>
-          <p>{items.length ? `${items.length} item(s)` : "Recycle Bin is empty."}</p>
+          <p>
+            {items.length ? `${items.length} item(s)` : "Recycle Bin is empty."}
+          </p>
         </div>
         <button
           type="button"
           disabled={!items.length}
           onClick={() => {
             emptyRecycleBin();
-            notify("Recycle Bin emptied", "Deleted items were permanently removed.");
+            notify(
+              "Recycle Bin emptied",
+              "Deleted items were permanently removed.",
+            );
           }}
         >
           <Trash2 size={15} /> Empty Recycle Bin
@@ -75,7 +80,10 @@ export default function RecycleBin() {
                     onClick={() => {
                       if (!confirm(`Permanently delete ${item.name}?`)) return;
                       deletePermanently(item.id);
-                      notify("Item deleted", `${item.name} was permanently deleted.`);
+                      notify(
+                        "Item deleted",
+                        `${item.name} was permanently deleted.`,
+                      );
                     }}
                   >
                     <Trash2 size={14} /> Delete

@@ -8,8 +8,15 @@ type Props = {
   onCreate: (name: string) => string | void;
 };
 
-export default function CreateItemDialog({ type, open, onCancel, onCreate }: Props) {
-  const [name, setName] = useState(type === "folder" ? "New Folder" : "New Text File.txt");
+export default function CreateItemDialog({
+  type,
+  open,
+  onCancel,
+  onCreate,
+}: Props) {
+  const [name, setName] = useState(
+    type === "folder" ? "New Folder" : "New Text File.txt",
+  );
   const [error, setError] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -25,11 +32,13 @@ export default function CreateItemDialog({ type, open, onCancel, onCreate }: Pro
   const submit = () => {
     const trimmed = name.trim();
     if (!trimmed) {
-      setError(`${type === "folder" ? "Folder" : "File"} name cannot be empty.`);
+      setError(
+        `${type === "folder" ? "Folder" : "File"} name cannot be empty.`,
+      );
       return;
     }
     if (!isValidName(trimmed)) {
-      setError("Names cannot contain / \\ : * ? \" < > or |.");
+      setError('Names cannot contain / \\ : * ? " < > or |.');
       return;
     }
     const result = onCreate(trimmed);
@@ -37,9 +46,13 @@ export default function CreateItemDialog({ type, open, onCancel, onCreate }: Pro
   };
 
   return (
-    <div className="dialog-backdrop" role="presentation" onMouseDown={(event) => {
-      if (event.target === event.currentTarget) onCancel();
-    }}>
+    <div
+      className="dialog-backdrop"
+      role="presentation"
+      onMouseDown={(event) => {
+        if (event.target === event.currentTarget) onCancel();
+      }}
+    >
       <form
         className="create-dialog"
         role="dialog"
@@ -73,10 +86,18 @@ export default function CreateItemDialog({ type, open, onCancel, onCreate }: Pro
           aria-invalid={Boolean(error)}
           aria-describedby={error ? "create-item-error" : undefined}
         />
-        {error && <p id="create-item-error" className="dialog-error">{error}</p>}
+        {error && (
+          <p id="create-item-error" className="dialog-error">
+            {error}
+          </p>
+        )}
         <div className="dialog-actions">
-          <button type="button" onClick={onCancel}>Cancel</button>
-          <button type="submit" className="dialog-primary">Create</button>
+          <button type="button" onClick={onCancel}>
+            Cancel
+          </button>
+          <button type="submit" className="dialog-primary">
+            Create
+          </button>
         </div>
       </form>
     </div>

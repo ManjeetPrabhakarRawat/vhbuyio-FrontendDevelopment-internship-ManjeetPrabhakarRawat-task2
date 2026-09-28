@@ -23,16 +23,19 @@ const defaults = {
 };
 const read = () => {
   try {
-    const saved = JSON.parse(localStorage.getItem(key) || "{}") as Partial<typeof defaults>;
+    const saved = JSON.parse(localStorage.getItem(key) || "{}") as Partial<
+      typeof defaults
+    >;
     const customWallpaper = localStorage.getItem(customWallpaperKey);
     const validCustomWallpaper = customWallpaper?.startsWith("data:image/")
       ? customWallpaper
       : null;
-    const wallpaper = saved.wallpaper === "custom" && validCustomWallpaper
-      ? "custom"
-      : saved.wallpaper === "custom"
-        ? "default"
-        : saved.wallpaper;
+    const wallpaper =
+      saved.wallpaper === "custom" && validCustomWallpaper
+        ? "custom"
+        : saved.wallpaper === "custom"
+          ? "default"
+          : saved.wallpaper;
     return {
       ...defaults,
       ...saved,

@@ -12,7 +12,11 @@ type NativeNetworkResult = {
 };
 
 type NativeNetworkProvider = {
-  getConnectedNetworkName: () => Promise<NativeNetworkResult | string | null> | NativeNetworkResult | string | null;
+  getConnectedNetworkName: () =>
+    | Promise<NativeNetworkResult | string | null>
+    | NativeNetworkResult
+    | string
+    | null;
   subscribe?: (listener: () => void) => () => void;
 };
 
@@ -29,7 +33,11 @@ const normalizeNativeResult = (
   result: NativeNetworkResult | string | null,
 ): NetworkState => {
   if (typeof result === "string") {
-    return { name: result || null, connected: Boolean(result), internet: false };
+    return {
+      name: result || null,
+      connected: Boolean(result),
+      internet: false,
+    };
   }
 
   return {
@@ -67,7 +75,11 @@ export async function getConnectedNetworkName(): Promise<NetworkState> {
       throw new Error(`Invalid network API response from ${url}`);
     }
 
-    const data = result as { connected: boolean; ssid?: unknown; internet: boolean };
+    const data = result as {
+      connected: boolean;
+      ssid?: unknown;
+      internet: boolean;
+    };
     const name = typeof data.ssid === "string" && data.ssid ? data.ssid : null;
     return {
       name,

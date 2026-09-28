@@ -18,7 +18,7 @@ const iconMap: Record<string, any> = {
   Rename: Pencil,
   Open: ExternalLink,
   "Change Wallpaper": Settings,
-  "Properties": Settings,
+  Properties: Settings,
 };
 
 export default function ContextMenu({

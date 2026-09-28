@@ -65,8 +65,10 @@ export default function TerminalApp(_props: { windowId?: string }) {
   useLayoutEffect(() => {
     const output = outputRef.current;
     if (!output) return;
-    const atBottom = output.scrollHeight - output.scrollTop - output.clientHeight < 24;
-    if (shouldAutoScrollRef.current || atBottom) output.scrollTop = output.scrollHeight;
+    const atBottom =
+      output.scrollHeight - output.scrollTop - output.clientHeight < 24;
+    if (shouldAutoScrollRef.current || atBottom)
+      output.scrollTop = output.scrollHeight;
   }, [entries, cwd]);
 
   useEffect(() => {
@@ -143,18 +145,21 @@ export default function TerminalApp(_props: { windowId?: string }) {
       }
       case "mkdir":
         if (!args[0]) output = ["mkdir: missing operand"];
-        else if (!addFolder(args.join(" "), cwd)) output = ["mkdir: unable to create directory"];
+        else if (!addFolder(args.join(" "), cwd))
+          output = ["mkdir: unable to create directory"];
         break;
       case "touch":
         if (!args[0]) output = ["touch: missing file name"];
-        else if (!addFile(args.join(" "), cwd, "")) output = ["touch: unable to create file"];
+        else if (!addFile(args.join(" "), cwd, ""))
+          output = ["touch: unable to create file"];
         break;
       case "cat":
       case "type": {
         const target = args[0] ?? "";
         const id = resolve(target);
         const file = id ? files.find((item) => item.id === id) : null;
-        if (!file || file.type !== "file") output = [`${cmd}: no such file: ${target}`];
+        if (!file || file.type !== "file")
+          output = [`${cmd}: no such file: ${target}`];
         else output = (file.content || "").split("\n");
         break;
       }
@@ -165,7 +170,8 @@ export default function TerminalApp(_props: { windowId?: string }) {
       case "del": {
         const target = args[0] ?? "";
         const id = resolve(target);
-        if (!id || id === ROOT || !target) output = [`${cmd}: cannot remove: ${target}`];
+        if (!id || id === ROOT || !target)
+          output = [`${cmd}: cannot remove: ${target}`];
         else remove(id);
         break;
       }
@@ -187,26 +193,32 @@ export default function TerminalApp(_props: { windowId?: string }) {
     setHistoryIndex(-1);
     setInput("");
     if (clearScreen) setEntries([]);
-    else setEntries((previous) => [...previous, { command, output, path: entryPath }]);
+    else
+      setEntries((previous) => [
+        ...previous,
+        { command, output, path: entryPath },
+      ]);
     window.requestAnimationFrame(() => inputRef.current?.focus());
   };
 
   const moveHistory = (direction: "up" | "down") => {
     if (!commandHistory.length) return;
     if (direction === "up") {
-      const next = historyIndex < 0
-        ? commandHistory.length - 1
-        : Math.max(0, historyIndex - 1);
+      const next =
+        historyIndex < 0
+          ? commandHistory.length - 1
+          : Math.max(0, historyIndex - 1);
       setHistoryIndex(next);
       setInput(commandHistory[next] ?? "");
       return;
     }
 
-    const next = historyIndex < 0 || historyIndex >= commandHistory.length - 1
-      ? -1
-      : historyIndex + 1;
+    const next =
+      historyIndex < 0 || historyIndex >= commandHistory.length - 1
+        ? -1
+        : historyIndex + 1;
     setHistoryIndex(next);
-    setInput(next < 0 ? "" : commandHistory[next] ?? "");
+    setInput(next < 0 ? "" : (commandHistory[next] ?? ""));
   };
 
   return (
@@ -216,7 +228,10 @@ export default function TerminalApp(_props: { windowId?: string }) {
           <pre>BrowserOS Terminal</pre>
           <pre>{'Type "help" for available commands.'}</pre>
           {entries.map((entry, index) => (
-            <div className="terminal-entry" key={`${entry.path}-${entry.command}-${index}`}>
+            <div
+              className="terminal-entry"
+              key={`${entry.path}-${entry.command}-${index}`}
+            >
               <div className="terminal-command">
                 <span>{entry.path}&gt; </span>
                 <span>{entry.command}</span>

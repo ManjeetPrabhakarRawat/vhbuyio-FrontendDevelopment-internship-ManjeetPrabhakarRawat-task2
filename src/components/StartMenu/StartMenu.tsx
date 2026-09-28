@@ -1,4 +1,13 @@
-import { Search, Folder, Terminal, FileText, Settings, Calculator, Power, Trash2 } from "lucide-react";
+import {
+  Search,
+  Folder,
+  Terminal,
+  FileText,
+  Settings,
+  Calculator,
+  Power,
+  Trash2,
+} from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { useFS } from "../../stores/filesystemStore";
 import { useWindows } from "../../stores/windowStore";
@@ -68,7 +77,7 @@ export default function StartMenu({
           onChange={(e) => setQ(e.target.value)}
         />
       </div>
-      {(q.trim() && (appResults.length > 0 || fileResults.length > 0)) && (
+      {q.trim() && (appResults.length > 0 || fileResults.length > 0) && (
         <div className="search-results">
           {appResults.map(([app, title, Icon]) => (
             <button
@@ -79,7 +88,8 @@ export default function StartMenu({
               }}
             >
               {(() => {
-                const AppIcon = APP_ICONS[app as keyof typeof APP_ICONS] ?? Icon;
+                const AppIcon =
+                  APP_ICONS[app as keyof typeof APP_ICONS] ?? Icon;
                 return <AppIcon size={17} />;
               })()}
               <span>{title}</span>
@@ -97,7 +107,11 @@ export default function StartMenu({
                 close();
               }}
             >
-              {f.type === "file" ? <FileText size={17} /> : <Folder size={17} />}
+              {f.type === "file" ? (
+                <FileText size={17} />
+              ) : (
+                <Folder size={17} />
+              )}
               <span>{f.name}</span>
             </button>
           ))}
@@ -108,7 +122,9 @@ export default function StartMenu({
           <h4>Applications</h4>
           <div className="app-grid">
             {apps
-              .filter(([_, title]) => title.toLowerCase().includes(q.toLowerCase()))
+              .filter(([_, title]) =>
+                title.toLowerCase().includes(q.toLowerCase()),
+              )
               .map(([app, title, Icon]) => (
                 <button
                   key={app}
@@ -118,7 +134,8 @@ export default function StartMenu({
                   }}
                 >
                   {(() => {
-                    const AppIcon = APP_ICONS[app as keyof typeof APP_ICONS] ?? Icon;
+                    const AppIcon =
+                      APP_ICONS[app as keyof typeof APP_ICONS] ?? Icon;
                     return <AppIcon />;
                   })()}
                   <span>{title}</span>

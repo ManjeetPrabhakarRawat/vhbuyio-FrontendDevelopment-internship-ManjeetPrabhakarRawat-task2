@@ -2,7 +2,10 @@ import { useRef, useState } from "react";
 import { Image, Upload, X } from "lucide-react";
 import { useSettings } from "../../stores/settingsStore";
 import type { Wallpaper } from "../../types";
-import { natureWallpaperById, natureWallpapers } from "../../assets/natureWallpapers";
+import {
+  natureWallpaperById,
+  natureWallpapers,
+} from "../../assets/natureWallpapers";
 import CropWallpaperDialog from "./CropWallpaperDialog";
 
 const builtInWallpapers: Wallpaper[] = ["default", "gradient", "aurora"];
@@ -36,9 +39,15 @@ export default function WallpaperPicker({ close, embedded = false }: Props) {
       aria-labelledby="wallpaper-picker-title"
     >
       <div className="popup-header">
-        <h2 id="wallpaper-picker-title"><Image size={18} /> Wallpaper</h2>
+        <h2 id="wallpaper-picker-title">
+          <Image size={18} /> Wallpaper
+        </h2>
         {!embedded && close && (
-          <button type="button" onClick={close} aria-label="Close wallpaper picker">
+          <button
+            type="button"
+            onClick={close}
+            aria-label="Close wallpaper picker"
+          >
             <X size={17} />
           </button>
         )}
@@ -46,7 +55,11 @@ export default function WallpaperPicker({ close, embedded = false }: Props) {
       <div
         className={`wallpaper-preview ${settings.wallpaper === "custom" ? "custom" : ""}`}
         data-wallpaper={settings.wallpaper}
-        style={selectedNature ? { backgroundImage: `url("${selectedNature.image}")` } : undefined}
+        style={
+          selectedNature
+            ? { backgroundImage: `url("${selectedNature.image}")` }
+            : undefined
+        }
       >
         {settings.wallpaper === "custom" && settings.customWallpaper && (
           <img src={settings.customWallpaper} alt="Current custom wallpaper" />
@@ -88,7 +101,11 @@ export default function WallpaperPicker({ close, embedded = false }: Props) {
           event.currentTarget.value = "";
         }}
       />
-      <button type="button" className="wallpaper-upload" onClick={() => inputRef.current?.click()}>
+      <button
+        type="button"
+        className="wallpaper-upload"
+        onClick={() => inputRef.current?.click()}
+      >
         <Upload size={15} /> Choose from computer
       </button>
     </div>
@@ -99,9 +116,13 @@ export default function WallpaperPicker({ close, embedded = false }: Props) {
       {embedded ? (
         content
       ) : (
-        <div className="dialog-backdrop" role="presentation" onMouseDown={(event) => {
-          if (event.target === event.currentTarget) close?.();
-        }}>
+        <div
+          className="dialog-backdrop"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) close?.();
+          }}
+        >
           {content}
         </div>
       )}

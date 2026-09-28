@@ -12,7 +12,10 @@ import { useFS } from "../../stores/filesystemStore";
 import { useNotifications } from "../../stores/notificationStore";
 import { useSettings } from "../../stores/settingsStore";
 import WallpaperPicker from "../../components/WallpaperPicker/WallpaperPicker";
-import { natureWallpaperById, natureWallpapers } from "../../assets/natureWallpapers";
+import {
+  natureWallpaperById,
+  natureWallpapers,
+} from "../../assets/natureWallpapers";
 
 const themes: Theme[] = ["light", "dark", "purple", "blue", "midnight"];
 const wallpapers: Wallpaper[] = ["default", "gradient", "aurora"];
@@ -22,7 +25,8 @@ export default function Settings(_props: { windowId?: string }) {
   const [pickerOpen, setPickerOpen] = useState(false);
   const fsReset = useFS((state) => state.reset);
   const notify = useNotifications((state) => state.push);
-  const selectedNature = natureWallpaperById[settings.wallpaper as keyof typeof natureWallpaperById];
+  const selectedNature =
+    natureWallpaperById[settings.wallpaper as keyof typeof natureWallpaperById];
 
   const update = (patch: {
     theme?: Theme;
@@ -74,10 +78,17 @@ export default function Settings(_props: { windowId?: string }) {
           <div
             className={`settings-wallpaper-preview-large ${settings.wallpaper === "custom" ? "custom" : ""}`}
             data-wallpaper={settings.wallpaper}
-            style={selectedNature ? { backgroundImage: `url("${selectedNature.image}")` } : undefined}
+            style={
+              selectedNature
+                ? { backgroundImage: `url("${selectedNature.image}")` }
+                : undefined
+            }
           >
             {settings.wallpaper === "custom" && settings.customWallpaper && (
-              <img src={settings.customWallpaper} alt="Current custom wallpaper" />
+              <img
+                src={settings.customWallpaper}
+                alt="Current custom wallpaper"
+              />
             )}
           </div>
           <div className="settings-subheading">Presets</div>
@@ -109,11 +120,24 @@ export default function Settings(_props: { windowId?: string }) {
           </div>
           <div className="settings-custom-row">
             <div className="settings-label">
-              <strong>{settings.wallpaper === "custom" ? "Custom wallpaper" : "Custom"}</strong>
-              <span>{settings.wallpaper === "custom" ? "Your selected image is active." : "Use an image from this computer."}</span>
+              <strong>
+                {settings.wallpaper === "custom"
+                  ? "Custom wallpaper"
+                  : "Custom"}
+              </strong>
+              <span>
+                {settings.wallpaper === "custom"
+                  ? "Your selected image is active."
+                  : "Use an image from this computer."}
+              </span>
             </div>
-            <button className="wallpaper-upload" onClick={() => setPickerOpen(true)}>
-              {settings.wallpaper === "custom" ? "Change" : "Choose from computer"}
+            <button
+              className="wallpaper-upload"
+              onClick={() => setPickerOpen(true)}
+            >
+              {settings.wallpaper === "custom"
+                ? "Change"
+                : "Choose from computer"}
             </button>
           </div>
         </div>
@@ -176,19 +200,30 @@ export default function Settings(_props: { windowId?: string }) {
         </div>
         <div className="settings-system-info">
           <strong>BrowserOS</strong>
-          <span>A simulated desktop environment running entirely in your browser.</span>
+          <span>
+            A simulated desktop environment running entirely in your browser.
+          </span>
         </div>
         <div className="settings-actions">
-          <button onClick={() => document.documentElement.requestFullscreen?.()}>
+          <button
+            onClick={() => document.documentElement.requestFullscreen?.()}
+          >
             <Maximize size={15} /> Fullscreen
           </button>
           <button
             className="danger"
             onClick={async () => {
-              if (confirm("Reset BrowserOS? Virtual files and settings will be restored to defaults.")) {
+              if (
+                confirm(
+                  "Reset BrowserOS? Virtual files and settings will be restored to defaults.",
+                )
+              ) {
                 await fsReset();
                 settings.reset();
-                notify("System reset", "BrowserOS has been restored to defaults.");
+                notify(
+                  "System reset",
+                  "BrowserOS has been restored to defaults.",
+                );
               }
             }}
           >

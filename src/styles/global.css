@@ -1083,7 +1083,10 @@ button {
   background-size: cover;
   color: #fff;
   text-align: left;
-  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
 }
 .nature-wallpaper-grid button::after {
   content: "";
@@ -1321,7 +1324,8 @@ html[data-wallpaper^="nature-"] .desktop {
 
 /* Shared BrowserOS visual language */
 :root {
-  font-family: "Segoe UI Variable", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  font-family:
+    "Segoe UI Variable", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
   letter-spacing: 0;
   --radius-control: 9px;
   --radius-surface: 14px;
@@ -1369,8 +1373,13 @@ html[data-wallpaper^="nature-"] .desktop {
 button,
 input,
 textarea {
-  transition: background-color 140ms ease, border-color 140ms ease, box-shadow 140ms ease,
-    color 140ms ease, opacity 140ms ease, transform 140ms ease;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    color 140ms ease,
+    opacity 140ms ease,
+    transform 140ms ease;
 }
 button:focus-visible,
 input:focus-visible,
@@ -1382,7 +1391,12 @@ button:disabled {
   cursor: not-allowed;
 }
 .desktop:before {
-  background: linear-gradient(135deg, rgba(9, 16, 33, 0.42), transparent 52%, rgba(9, 16, 33, 0.2));
+  background: linear-gradient(
+    135deg,
+    rgba(9, 16, 33, 0.42),
+    transparent 52%,
+    rgba(9, 16, 33, 0.2)
+  );
   pointer-events: none;
 }
 .desktop-icons {
@@ -1397,7 +1411,10 @@ button:disabled {
   border: 1px solid transparent;
   border-radius: 11px;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
-  transition: background-color 140ms ease, border-color 140ms ease, transform 140ms ease;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    transform 140ms ease;
 }
 .desktop-icons button:hover {
   transform: translateY(-1px);
@@ -1460,10 +1477,15 @@ button:disabled {
   border-radius: var(--radius-surface);
   border-color: color-mix(in srgb, var(--border) 78%, transparent);
   box-shadow: var(--shadow-window);
-  transition: box-shadow 160ms ease, opacity 160ms ease, filter 160ms ease;
+  transition:
+    box-shadow 160ms ease,
+    opacity 160ms ease,
+    filter 160ms ease;
 }
 .window.active {
-  box-shadow: 0 24px 62px rgba(0, 0, 0, 0.34), 0 0 0 1px color-mix(in srgb, var(--accent) 28%, transparent);
+  box-shadow:
+    0 24px 62px rgba(0, 0, 0, 0.34),
+    0 0 0 1px color-mix(in srgb, var(--accent) 28%, transparent);
 }
 .window.inactive {
   opacity: 0.94;

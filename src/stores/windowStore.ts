@@ -8,8 +8,10 @@ const base = (
   title: string,
   data?: Record<string, unknown>,
 ): Win => {
-  const viewportWidth = typeof window === "undefined" ? 1200 : window.innerWidth;
-  const viewportHeight = typeof window === "undefined" ? 800 : window.innerHeight;
+  const viewportWidth =
+    typeof window === "undefined" ? 1200 : window.innerWidth;
+  const viewportHeight =
+    typeof window === "undefined" ? 800 : window.innerHeight;
   const isSettings = app === "settings";
   const width = isSettings
     ? Math.min(900, Math.max(700, viewportWidth - 80))

@@ -16,7 +16,9 @@ import { APP_ICONS } from "../../constants/apps";
 import { children, DESKTOP, path, ROOT } from "../../utils/filesystem";
 import ContextMenu from "../ContextMenu/ContextMenu";
 import CreateItemDialog from "../CreateItemDialog/CreateItemDialog";
-import PropertiesDialog, { type PropertiesData } from "../PropertiesDialog/PropertiesDialog";
+import PropertiesDialog, {
+  type PropertiesData,
+} from "../PropertiesDialog/PropertiesDialog";
 
 type DialogType = "folder" | "file";
 
@@ -54,7 +56,9 @@ export default function Desktop({
     itemId?: string;
   } | null>(null);
   const [dialog, setDialog] = useState<DialogType | null>(null);
-  const [propertiesItem, setPropertiesItem] = useState<PropertiesData | null>(null);
+  const [propertiesItem, setPropertiesItem] = useState<PropertiesData | null>(
+    null,
+  );
   const [showHint, setShowHint] = useState(true);
 
   useEffect(() => {
@@ -83,9 +87,10 @@ export default function Desktop({
       return `${type === "folder" ? "A folder" : "A file"} named '${finalName}' already exists.`;
     }
 
-    const id = type === "folder"
-      ? addFolder(finalName, DESKTOP)
-      : addFile(finalName, DESKTOP, "");
+    const id =
+      type === "folder"
+        ? addFolder(finalName, DESKTOP)
+        : addFile(finalName, DESKTOP, "");
     if (!id) return `Unable to create ${type}.`;
 
     setDialog(null);
@@ -93,64 +98,92 @@ export default function Desktop({
     notify(`${type === "folder" ? "Folder" : "File"} created`, finalName);
   };
 
-  const contextItems: [string, () => void][] = menu?.kind === "item"
-    ? [
-        ["Open", () => {
-          const item = files.find((entry) => entry.id === menu.itemId);
-          if (item) openItem(item);
-          closeMenu();
-        }],
-        ["Properties", () => {
-          const item = files.find((entry) => entry.id === menu.itemId);
-          if (item) {
-            setPropertiesItem({
-              name: item.name,
-              type: item.type === "folder" ? "Folder" : "File",
-              location: `/${path(files, item.id).slice(1, -1).join("/") || ""}`,
-            });
-          }
-          closeMenu();
-        }],
-      ]
-    : menu?.kind === "app"
+  const contextItems: [string, () => void][] =
+    menu?.kind === "item"
       ? [
-          ["Open", () => {
-            if (menu.appId && menu.title) open(menu.appId, menu.title);
-            closeMenu();
-          }],
-          ["Properties", () => {
-            if (menu.title) {
-              setPropertiesItem({
-                name: menu.title,
-                type: "Application",
-                location: "/Desktop",
-              });
-            }
-            closeMenu();
-          }],
+          [
+            "Open",
+            () => {
+              const item = files.find((entry) => entry.id === menu.itemId);
+              if (item) openItem(item);
+              closeMenu();
+            },
+          ],
+          [
+            "Properties",
+            () => {
+              const item = files.find((entry) => entry.id === menu.itemId);
+              if (item) {
+                setPropertiesItem({
+                  name: item.name,
+                  type: item.type === "folder" ? "Folder" : "File",
+                  location: `/${path(files, item.id).slice(1, -1).join("/") || ""}`,
+                });
+              }
+              closeMenu();
+            },
+          ],
         ]
-    : [
-        ["New Folder", () => {
-          closeMenu();
-          setDialog("folder");
-        }],
-        ["New Text File", () => {
-          closeMenu();
-          setDialog("file");
-        }],
-        ["Refresh", () => {
-          closeMenu();
-          setSelected(null);
-        }],
-        ["Settings", () => {
-          closeMenu();
-          open("settings", "Settings");
-        }],
-        ["Change Wallpaper", () => {
-          closeMenu();
-          openWallpaperPicker();
-        }],
-      ];
+      : menu?.kind === "app"
+        ? [
+            [
+              "Open",
+              () => {
+                if (menu.appId && menu.title) open(menu.appId, menu.title);
+                closeMenu();
+              },
+            ],
+            [
+              "Properties",
+              () => {
+                if (menu.title) {
+                  setPropertiesItem({
+                    name: menu.title,
+                    type: "Application",
+                    location: "/Desktop",
+                  });
+                }
+                closeMenu();
+              },
+            ],
+          ]
+        : [
+            [
+              "New Folder",
+              () => {
+                closeMenu();
+                setDialog("folder");
+              },
+            ],
+            [
+              "New Text File",
+              () => {
+                closeMenu();
+                setDialog("file");
+              },
+            ],
+            [
+              "Refresh",
+              () => {
+                closeMenu();
+                setSelected(null);
+              },
+            ],
+            [
+              "Settings",
+              () => {
+                closeMenu();
+                open("settings", "Settings");
+              },
+            ],
+            [
+              "Change Wallpaper",
+              () => {
+                closeMenu();
+                openWallpaperPicker();
+              },
+            ],
+          ];
 
   return (
     <div
@@ -180,7 +213,11 @@ export default function Desktop({
               onDoubleClick={(event) => {
                 event.stopPropagation();
                 setShowHint(false);
-                open(app, title, app === "file-explorer" ? { directoryId: ROOT } : undefined);
+                open(
+                  app,
+                  title,
+                  app === "file-explorer" ? { directoryId: ROOT } : undefined,
+                );
               }}
               onContextMenu={(event) => {
                 event.preventDefault();
@@ -196,7 +233,11 @@ export default function Desktop({
               }}
               title={title}
             >
-              <AppIcon className="desktop-icon-svg" data-app={app} aria-hidden="true" />
+              <AppIcon
+                className="desktop-icon-svg"
+                data-app={app}
+                aria-hidden="true"
+              />
               <span>{title}</span>
             </button>
           );
@@ -228,16 +269,29 @@ export default function Desktop({
             title={item.name}
           >
             {item.type === "folder" ? (
-              <Folder className="desktop-icon-svg" data-file-type="folder" aria-hidden="true" />
+              <Folder
+                className="desktop-icon-svg"
+                data-file-type="folder"
+                aria-hidden="true"
+              />
             ) : (
-              <FileText className="desktop-icon-svg" data-file-type="file" aria-hidden="true" />
+              <FileText
+                className="desktop-icon-svg"
+                data-file-type="file"
+                aria-hidden="true"
+              />
             )}
             <span>{item.name}</span>
           </button>
         ))}
       </div>
       {menu && (
-        <ContextMenu x={menu.x} y={menu.y} close={closeMenu} items={contextItems} />
+        <ContextMenu
+          x={menu.x}
+          y={menu.y}
+          close={closeMenu}
+          items={contextItems}
+        />
       )}
       <CreateItemDialog
         type={dialog ?? "folder"}

@@ -12,18 +12,32 @@ type Props = {
   onApply: (dataUrl: string) => void;
 };
 
-export default function CropWallpaperDialog({ source, onCancel, onApply }: Props) {
+export default function CropWallpaperDialog({
+  source,
+  onCancel,
+  onApply,
+}: Props) {
   const frameRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
   const [naturalSize, setNaturalSize] = useState({ width: 0, height: 0 });
   const [frameSize, setFrameSize] = useState({ width: 0, height: 0 });
   const [zoom, setZoom] = useState(1);
   const [position, setPosition] = useState<Point>({ x: 0, y: 0 });
-  const [dragStart, setDragStart] = useState<{ pointer: Point; position: Point } | null>(null);
+  const [dragStart, setDragStart] = useState<{
+    pointer: Point;
+    position: Point;
+  } | null>(null);
 
-  const baseScale = naturalSize.width && naturalSize.height && frameSize.width && frameSize.height
-    ? Math.max(frameSize.width / naturalSize.width, frameSize.height / naturalSize.height)
-    : 1;
+  const baseScale =
+    naturalSize.width &&
+    naturalSize.height &&
+    frameSize.width &&
+    frameSize.height
+      ? Math.max(
+          frameSize.width / naturalSize.width,
+          frameSize.height / naturalSize.height,
+        )
+      : 1;
   const imageWidth = naturalSize.width * baseScale * zoom;
   const imageHeight = naturalSize.height * baseScale * zoom;
 
@@ -76,10 +90,15 @@ export default function CropWallpaperDialog({ source, onCancel, onApply }: Props
     const ratio = next / zoom;
     const center = { x: frameSize.width / 2, y: frameSize.height / 2 };
     setZoom(next);
-    setPosition(clampForZoom({
-      x: center.x - (center.x - position.x) * ratio,
-      y: center.y - (center.y - position.y) * ratio,
-    }, next));
+    setPosition(
+      clampForZoom(
+        {
+          x: center.x - (center.x - position.x) * ratio,
+          y: center.y - (center.y - position.y) * ratio,
+        },
+        next,
+      ),
+    );
   };
 
   const apply = () => {
@@ -112,14 +131,25 @@ export default function CropWallpaperDialog({ source, onCancel, onApply }: Props
 
   return (
     <div className="dialog-backdrop crop-backdrop" role="presentation">
-      <div className="crop-dialog" role="dialog" aria-modal="true" aria-labelledby="crop-wallpaper-title">
+      <div
+        className="crop-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="crop-wallpaper-title"
+      >
         <div className="popup-header">
           <h2 id="crop-wallpaper-title">Crop Wallpaper</h2>
-          <button type="button" onClick={onCancel} aria-label="Close crop editor">
+          <button
+            type="button"
+            onClick={onCancel}
+            aria-label="Close crop editor"
+          >
             <X size={17} />
           </button>
         </div>
-        <p className="crop-description">Position the image inside the desktop frame.</p>
+        <p className="crop-description">
+          Position the image inside the desktop frame.
+        </p>
         <div
           ref={frameRef}
           className="crop-frame"
@@ -132,10 +162,12 @@ export default function CropWallpaperDialog({ source, onCancel, onApply }: Props
           }}
           onPointerMove={(event) => {
             if (!dragStart) return;
-            setPosition(clampPosition({
-              x: dragStart.position.x + event.clientX - dragStart.pointer.x,
-              y: dragStart.position.y + event.clientY - dragStart.pointer.y,
-            }));
+            setPosition(
+              clampPosition({
+                x: dragStart.position.x + event.clientX - dragStart.pointer.x,
+                y: dragStart.position.y + event.clientY - dragStart.pointer.y,
+              }),
+            );
           }}
           onPointerUp={() => setDragStart(null)}
           onPointerCancel={() => setDragStart(null)}
@@ -149,10 +181,12 @@ export default function CropWallpaperDialog({ source, onCancel, onApply }: Props
             src={source}
             alt="Wallpaper crop preview"
             draggable={false}
-            onLoad={(event) => setNaturalSize({
-              width: event.currentTarget.naturalWidth,
-              height: event.currentTarget.naturalHeight,
-            })}
+            onLoad={(event) =>
+              setNaturalSize({
+                width: event.currentTarget.naturalWidth,
+                height: event.currentTarget.naturalHeight,
+              })
+            }
             style={{
               width: imageWidth,
               height: imageHeight,
@@ -163,7 +197,11 @@ export default function CropWallpaperDialog({ source, onCancel, onApply }: Props
           <div className="crop-frame-line" aria-hidden="true" />
         </div>
         <div className="crop-controls">
-          <button type="button" onClick={() => updateZoom(zoom - 0.1)} aria-label="Zoom out">
+          <button
+            type="button"
+            onClick={() => updateZoom(zoom - 0.1)}
+            aria-label="Zoom out"
+          >
             <Minus size={15} />
           </button>
           <input
@@ -175,7 +213,11 @@ export default function CropWallpaperDialog({ source, onCancel, onApply }: Props
             aria-label="Zoom"
             onChange={(event) => updateZoom(Number(event.target.value))}
           />
-          <button type="button" onClick={() => updateZoom(zoom + 0.1)} aria-label="Zoom in">
+          <button
+            type="button"
+            onClick={() => updateZoom(zoom + 0.1)}
+            aria-label="Zoom in"
+          >
             <Plus size={15} />
           </button>
           <span>{Math.round(zoom * 100)}%</span>
@@ -185,7 +227,9 @@ export default function CropWallpaperDialog({ source, onCancel, onApply }: Props
             <RotateCcw size={15} /> Reset
           </button>
           <div>
-            <button type="button" onClick={onCancel}>Cancel</button>
+            <button type="button" onClick={onCancel}>
+              Cancel
+            </button>
             <button
               type="button"
               className="dialog-primary"

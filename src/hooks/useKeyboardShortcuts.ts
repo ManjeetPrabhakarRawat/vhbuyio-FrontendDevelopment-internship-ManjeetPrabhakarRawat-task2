@@ -1,16 +1,8 @@
 import { useEffect } from "react";
-export function useKeyboardShortcuts(
-  onStart: () => void,
-  onClose: () => void,
-) {
+export function useKeyboardShortcuts(onStart: () => void, onClose: () => void) {
   useEffect(() => {
     const f = (e: KeyboardEvent) => {
-      if (
-        e.key === "Meta" &&
-        !e.ctrlKey &&
-        !e.altKey &&
-        !e.shiftKey
-      ) {
+      if (e.key === "Meta" && !e.ctrlKey && !e.altKey && !e.shiftKey) {
         e.preventDefault();
         onStart();
       }
