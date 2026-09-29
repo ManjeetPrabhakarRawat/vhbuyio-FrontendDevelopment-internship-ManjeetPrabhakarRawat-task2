@@ -72,8 +72,9 @@ CSS | UI & responsive styling
                            │  localStorage   │
                            └─────────────────┘
 
-
-📂 Project Structure:
+---
+ 
+## 📂 Project Structure:
 
 Browser-Based-OS/
 │
@@ -139,10 +140,12 @@ Browser-Based-OS/
 ├── .gitignore
 └── README.md
 
+---
 
-🔄 Data Flow:
 
-Virtual Filesystem:
+## 🔄 Data Flow:
+
+## Virtual Filesystem:
 
 User Action
      ↓
@@ -156,8 +159,9 @@ IndexedDB
      ↓
 Persistent Browser Data
 
-
-Settings:
+---
+  
+## Settings:
 
 User Changes Setting
         ↓
@@ -167,8 +171,9 @@ localStorage
         ↓
 BrowserOS UI
 
+---
 
-Window Management:
+## Window Management:
 
 Application
      ↓
@@ -178,8 +183,9 @@ Open / Focus / Minimize / Maximize / Close
      ↓
 Shared Window Component
 
+---
 
-💾 Storage:
+## 💾 Storage:
 
 BrowserOS uses browser storage instead of the real computer filesystem.
 
@@ -198,8 +204,9 @@ BrowserOS uses browser storage instead of the real computer filesystem.
 │ └─ Settings           │
 │                       │
 └───────────────────────┘
+---
 
-⌨️ Keyboard Shortcuts:
+## ⌨️ Keyboard Shortcuts:
 
 Shortcut	Action
 
@@ -210,7 +217,9 @@ Alt + Tab	Switch windows
 Windows / Meta	Open Start Menu
 Escape	Close Start Menu
 
-⚙️ Installation:
+---
+
+## ⚙️ Installation:
 
 git clone https://github.com/ManjeetPrabhakarRawat/vhbuyio-FrontendDevelopment-internship-ManjeetPrabhakarRawat-task2.git
 
@@ -218,17 +227,18 @@ cd vhbuyio-FrontendDevelopment-internship-ManjeetPrabhakarRawat-task2
 
 npm install
 
-Run Development Server:
+## Run Development Server:
 npm run dev
 
-Production Build:
+## Production Build:
 npm run build
 
-Preview Production Build:
+## Preview Production Build:
 npm run preview
 
+---
 
-🚀 Deployment:
+##🚀 Deployment:
 
 BrowserOS is deployed as a Render Static Site.
 
@@ -244,9 +254,11 @@ dist/
    ↓
 🌐 Live BrowserOS
 
+---
+
 🚀 Live Demo
 
-⚠️ Limitations:
+## ⚠️ Limitations:
 
 BrowserOS is a browser simulation, not a real operating system.
 
@@ -256,8 +268,9 @@ Does not execute real OS commands
 Windows-specific network detection requires a Windows Node/Vite environment
 Browser security restrictions apply to certain system-level features
 
+---
 
-👨‍💻 Developer:
+## 👨‍💻 Developer:
 
 Manjeet Prabhakar Rawat
 B.Tech Computer Science & Engineering
@@ -266,3 +279,4 @@ B.Tech Computer Science & Engineering
 🌐 Live Demo
 💻 GitHub Repository
 
+---
